@@ -68,6 +68,7 @@
    * 4. Buttons
    * 5. Editor Showcase (CSS-only tabs)
    * 6. Shared Section Styles
+   * 6b. Trusted By (logo cloud)
    * 7. Why ECA
    * 8. Major Features (bento layout)
    * 9. Config Showcase (CSS-only carousel)
@@ -543,6 +544,56 @@
     max-width: 34rem;
     margin: 0 auto 2.25rem;
     line-height: 1.6;
+  }
+
+  /* ── 6b. Trusted By (logo strip) ── */
+  /* Fixed light background in both color schemes so the black logos stay visible. */
+  .eca-trusted {
+    min-height: 150px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem 2rem;
+    background: #f6f8fa;
+  }
+
+  .eca-trusted__title {
+    margin: 0;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.0em;
+    color: #5a6a7a;
+  }
+
+  .eca-trusted__logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem 4.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .eca-trusted__logos li {
+    margin: 0;
+  }
+
+  .eca-trusted__logos img {
+    display: block;
+    height: 27px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    /* Flatten every logo to solid black. For white use brightness(0) invert(1). */
+    filter: brightness(0);
+    &:not([alt="Team Ohana"]) {
+      opacity: 0.6;
+    }
   }
 
   /* ── 7. Why ECA ── */
@@ -1568,6 +1619,17 @@
       </div>
 
     </div>
+  </section>
+
+  <!-- ── Trusted by ── -->
+  <section class="eca-trusted" aria-label="Trusted by">
+    <h2 class="eca-trusted__title">Trusted by the best</h2>
+    <ul class="eca-trusted__logos">
+      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
+      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
+      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
+      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
+    </ul>
   </section>
 
   <!-- ── Why ECA ── -->

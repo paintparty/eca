@@ -547,7 +547,7 @@
   }
 
   /* ── 6b. Trusted By (logo strip) ── */
-  /* Fixed light background in both color schemes so the black logos stay visible. */
+  /* Background and borders match .eca-features. */
   .eca-trusted {
     min-height: 150px;
     box-sizing: border-box;
@@ -557,7 +557,9 @@
     align-items: center;
     gap: 1.25rem;
     padding: 1.5rem 2rem;
-    background: #f6f8fa;
+    background: var(--eca-bg-secondary);
+    border-top: 1px solid var(--eca-border);
+    border-bottom: 1px solid var(--eca-border);
   }
 
   .eca-trusted__title {
@@ -565,7 +567,7 @@
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.0em;
-    color: #5a6a7a;
+    color: var(--eca-text-secondary);
   }
 
   .eca-trusted__logos {
@@ -594,6 +596,10 @@
     &:not([alt="Team Ohana"]) {
       opacity: 0.6;
     }
+  }
+
+  [data-md-color-scheme="slate"] .eca-trusted__logos img {
+    filter: brightness(0) invert(1);
   }
 
   /* ── 7. Why ECA ── */
@@ -1101,8 +1107,7 @@
   /* ── 10. Community / Sponsor ── */
   .eca-community {
     padding: 3.5rem 2rem 4rem;
-    background: var(--eca-community-bg);
-    border-top: 1px solid var(--eca-border);
+    background: var(--eca-bg-primary);
     text-align: center;
   }
 
@@ -1621,17 +1626,6 @@
     </div>
   </section>
 
-  <!-- ── Trusted by ── -->
-  <section class="eca-trusted" aria-label="Trusted by">
-    <h2 class="eca-trusted__title">Trusted by the best</h2>
-    <ul class="eca-trusted__logos">
-      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
-      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
-      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
-      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
-    </ul>
-  </section>
-
   <!-- ── Why ECA ── -->
   <section class="eca-why">
     <div class="eca-why__inner">
@@ -2118,6 +2112,17 @@ git changes.</pre></div>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ── Trusted by ── -->
+  <section class="eca-trusted" aria-label="Trusted by">
+    <h2 class="eca-trusted__title">Trusted by the best</h2>
+    <ul class="eca-trusted__logos">
+      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
+      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
+      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
+      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
+    </ul>
   </section>
 
   <!-- ── Community ── -->

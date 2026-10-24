@@ -141,9 +141,11 @@ Please provide feedback of the difficulties implementing your server, especially
 
 The site at https://eca.dev is built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) from `docs/` and `mkdocs.yml`. Both options below serve it at http://localhost:8000 and reload on save.
 
+Two `bb` tasks wrap these options and also copy `README.md`, `CHANGELOG.md` and `images/` into `docs/`: `bb local-webpage` (Docker) and `bb local-webpage-no-docker` (uv).
+
 ### With Docker
 
-Uses the same image as CI, so plugins and versions match the published site.
+Uses the same image as CI, so plugins and versions match the published site. Run `bb local-webpage`, or the command it wraps:
 
 ```sh
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs \
@@ -158,7 +160,7 @@ docker run --rm -v ${PWD}:/docs ghcr.io/editor-code-assistant/docs-image/docs-im
 
 ### Without Docker
 
-Install [uv](https://docs.astral.sh/uv/), then run from the repo root:
+Install [uv](https://docs.astral.sh/uv/), then run `bb local-webpage-no-docker`, or the command it wraps from the repo root:
 
 ```sh
 uvx --with 'mkdocs-material==9.6.*' \

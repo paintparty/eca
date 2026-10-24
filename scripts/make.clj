@@ -165,10 +165,21 @@
       (throw (ex-info "More than one eca executables found. Can only work with one."
                       {:bin-found eca-bins-found})))))
 
-(defn local-webpage []
-  (let [files ["CHANGELOG.md" "README.md"]]
-    (doseq [f files]
-      (fs/copy f "docs" {:replace-existing true}))
-    (fs/copy-tree "images" "docs/images" {:replace-existing true})
-    (p/shell "docker login docker.pkg.github.com")
-    (p/shell (str "docker run --rm -it --network=host -v " (fs/cwd) ":/docs ghcr.io/editor-code-assistant/docs-image/docs-image"))))
+(defn ^:private copy-webpage-files []
+  (doseq [f ["CHANGELOG.md" "README.md"]]
+    (fs/copy f "docs" {:replace-existing true}))
+  (fs/copy-tree "images" "docs/images" {:replace-existing true}))
+
+(defn local-webpage
+  "Serves the docs site at http://localhost:8000 using the CI docker image."
+  []
+  (copy-webpage-files)
+  (p/shell "docker run --rm -it -p 8000:8000 -v" (str (fs/cwd) ":/docs")
+           "ghcr.io/editor-code-assistant/docs-image/docs-image serve -a 0.0.0.0:8000"))
+
+(defn local-webpage-no-docker
+  "Serves the docs site at http://localhost:8000 using uvx, no docker needed."
+  []
+  (copy-webpage-files)
+  (p/shell "uvx --with mkdocs-material==9.6.* --with mkdocs-awesome-pages-plugin"
+           "--with mkdocs-git-revision-date-localized-plugin mkdocs serve"))

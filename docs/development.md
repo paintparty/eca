@@ -163,7 +163,8 @@ docker run --rm -v ${PWD}:/docs ghcr.io/editor-code-assistant/docs-image/docs-im
 Install [uv](https://docs.astral.sh/uv/), then run `bb local-webpage-no-docker`, or the command it wraps from the repo root:
 
 ```sh
-uvx --with 'mkdocs-material==9.6.*' \
+uvx --python 3.11 \
+    --with 'mkdocs-material==9.6.*' \
     --with mkdocs-awesome-pages-plugin \
     --with mkdocs-git-revision-date-localized-plugin \
     mkdocs serve
@@ -171,4 +172,4 @@ uvx --with 'mkdocs-material==9.6.*' \
 
 The `--with` list mirrors `plugins:` in `mkdocs.yml`. If you add a plugin there, add it here too. The revision-date plugin reads git history, so run this from a git checkout.
 
-`mkdocs-material` is pinned to 9.6 because the CI image is built on `squidfunk/mkdocs-material:9.6`. Without the pin, `uvx` installs the newest release, which can render differently from the published site. When the image moves to a new Material version, change the pin to match.
+`mkdocs-material` is pinned to 9.6 because the CI image is built on `squidfunk/mkdocs-material:9.6`. Without the pin, `uvx` installs the newest release, which can render differently from the published site. `--python 3.11` matches the Python in that image. Without it, `uvx` uses whichever interpreter it finds first, which can resolve older plugin versions. When the image moves to a new Material or Python version, change both to match.

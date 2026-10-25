@@ -16,7 +16,7 @@ jobs:
 
       - name: Generate docs
         run: |
-          cp -rf CHANGELOG.md README.md images docs
+          cp -rf images docs
           docker login docker.pkg.github.com --username $GITHUB_ACTOR --password ${{ secrets.GITHUB_TOKEN }}
           docker run --rm -v ${PWD}:/docs ghcr.io/editor-code-assistant/docs-image/docs-image -- build
       - name: Deploy

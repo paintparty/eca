@@ -166,8 +166,6 @@
                       {:bin-found eca-bins-found})))))
 
 (defn ^:private copy-webpage-files []
-  (doseq [f ["CHANGELOG.md" "README.md"]]
-    (fs/copy f "docs" {:replace-existing true}))
   (fs/copy-tree "images" "docs/images" {:replace-existing true}))
 
 (defn local-webpage

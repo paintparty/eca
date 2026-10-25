@@ -141,7 +141,7 @@ Please provide feedback of the difficulties implementing your server, especially
 
 The site at https://eca.dev is built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) from `docs/` and `mkdocs.yml`. Both options below serve it at http://localhost:8000 and reload on save.
 
-Two `bb` tasks wrap these options and also copy `README.md`, `CHANGELOG.md` and `images/` into `docs/`: `bb local-webpage` (Docker) and `bb local-webpage-no-docker` (uv).
+Two `bb` tasks wrap these options and also copy `images/` into `docs/`: `bb local-webpage` (Docker) and `bb local-webpage-no-docker` (uv).
 
 ### With Docker
 

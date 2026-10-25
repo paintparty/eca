@@ -73,6 +73,9 @@ extra:
     - icon: fontawesome/solid/heart
       link: https://github.com/sponsors/editor-code-assistant
 
+extra_javascript:
+  - javascripts/gh-stars.js
+
 extra_css:
   # Material loads Inter at 300/400/700 only. Headings use 600.
   - https://fonts.googleapis.com/css2?family=Inter:wght@600&display=fallback

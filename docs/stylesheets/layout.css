@@ -1,4 +1,4 @@
-/* Header, tabs bar and footer stay teal to match the homepage hero.
+/* Header and footer stay teal to match the homepage hero.
    Hover and focus accents are black */
 :root {
   --md-primary-fg-color: #007a94;
@@ -340,10 +340,314 @@
   }
 }
 
-/* Tabs bar: links one pixel larger and brighter */
-.md-tabs__link {
-  font-size: 0.75rem;
+/* Header: one 2.6rem (52px) bar. Logo and name on the left, the top-level
+   links in the middle, search / Slack / GitHub stars on the right. The
+   links live in partials/header.html, so the old tabs bar is empty and
+   nothing scrolls away. Material's sidebar and anchor offsets assume a
+   2.4rem header, so they move down by the same 0.2rem. */
+.eca-header {
+  /* One size and weight for the links, Slack, stars and search so they
+     cannot drift apart */
+  --eca-header-font-size: 0.70rem;
+  --eca-header-font-weight: 500;
+}
+
+.eca-header .md-header__inner {
+  min-height: 2.6rem;
+}
+
+.md-sidebar {
+  top: 2.6rem;
+}
+
+.md-typeset :target {
+  --md-scroll-margin: 3.8rem;
+}
+
+.eca-header__left {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.eca-header__right {
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+}
+
+.eca-header__name {
+  color: inherit;
+}
+
+.eca-header__links {
+  display: none;
+}
+
+.eca-header__link {
+  color: inherit;
+  display: block;
+  font-size: var(--eca-header-font-size);
+  font-weight: var(--eca-header-font-weight);
+  line-height: 2.6rem;
   opacity: 0.9;
+  padding: 0 0.7rem;
+  transition: opacity 0.25s;
+  white-space: nowrap;
+}
+
+.eca-header__link:hover,
+.eca-header__link--active {
+  opacity: 1;
+}
+
+.eca-header__link--active {
+  box-shadow: inset 0 -2px currentcolor;
+}
+
+/* Search, Slack and stars share one look at every width: a 28px tall
+   box with a 1px white outline and 3px corners, 70% opacity and 100% on
+   hover. Sizes follow the counter badges on paintparty.github.io/bling. */
+.eca-header__right {
+  gap: 0.4rem;
+  padding-right: 0.4rem;
+}
+
+.eca-header__slack,
+.eca-stars,
+.md-header__button[for=__search],
+[data-md-toggle=search]:not(:checked) ~ .md-header .md-search__form {
+  border: 1px solid currentcolor;
+  border-radius: 3px;
+  box-sizing: border-box;
+  opacity: 0.7;
+  transition: opacity 0.25s;
+}
+
+.eca-header__slack:hover,
+.eca-stars:hover,
+.md-header__button[for=__search]:hover,
+[data-md-toggle=search]:not(:checked) ~ .md-header .md-search__form:hover {
+  opacity: 1;
+}
+
+.eca-header__slack,
+.eca-stars,
+.eca-stars__identity,
+.eca-search__label {
+  font-size: var(--eca-header-font-size);
+  font-weight: var(--eca-header-font-weight);
+  line-height: 1;
+}
+
+.eca-header__slack,
+.eca-stars,
+.eca-stars__identity {
+  align-items: center;
+  display: inline-flex;
+  gap: 5px;
+}
+
+.eca-header__slack,
+.eca-stars {
+  color: inherit;
+  height: 28px;
+}
+
+.eca-header__slack {
+  padding: 0 8px;
+}
+
+.eca-header__slack svg,
+.eca-stars svg {
+  display: block;
+  fill: currentcolor;
+  flex-shrink: 0;
+}
+
+.eca-header__slack svg {
+  height: 16px;
+  width: 16px;
+}
+
+/* Star counter: GitHub icon and "Star" on the left, a vertical divider,
+   then the count on the right. The count is filled in by
+   javascripts/gh-stars.js and stays hidden if the API call fails. */
+.eca-stars__identity {
+  height: 100%;
+  padding: 0 8px;
+}
+
+.eca-stars svg {
+  height: 17px;
+  width: 17px;
+}
+
+.eca-stars__count {
+  align-items: center;
+  border-left: 1px solid currentcolor;
+  display: flex;
+  height: 100%;
+  padding: 0 8px;
+}
+
+.eca-stars__count[hidden] {
+  display: none;
+}
+
+/* Search below 60em is Material's icon button: icon, divider, "Search".
+   The display is set only here because Material hides the button from
+   60em up. */
+@media screen and (max-width: 59.984375em) {
+  .md-header__button[for=__search] {
+    align-items: center;
+    display: inline-flex;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .md-header__button[for=__search] svg {
+    height: 17px;
+    margin: 0 5px;
+    width: 17px;
+  }
+
+  .md-header__button[for=__search] .eca-search__label {
+    align-items: center;
+    border-left: 1px solid currentcolor;
+    display: flex;
+    height: 100%;
+    padding: 0 8px;
+  }
+}
+
+/* Narrow phones: Slack and search drop their words and keep the icon */
+@media screen and (max-width: 40em) {
+  .eca-header__slack span,
+  .md-header__button[for=__search] .eca-search__label {
+    display: none;
+  }
+
+  .md-header__button[for=__search] {
+    justify-content: center;
+    width: 28px;
+  }
+
+  .md-header__button[for=__search] svg {
+    margin: 0;
+  }
+}
+
+/* From 60em Material shows an 11.7rem search box. Collapse it to a 28px
+   tall button like the star counter: a 28px square with the icon, a
+   divider, then "Search". Clicking
+   focuses the input, Material then checks the search toggle and the box
+   grows to its normal width, leftward. The collapsed width is fixed so
+   the grow animates. */
+@media screen and (min-width: 60em) {
+  .eca-header .md-search {
+    height: 28px;
+    padding: 0;
+    position: relative;
+    width: 5.2rem;
+  }
+
+  .eca-header .md-search__inner {
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .eca-header .md-search__form {
+    height: 28px;
+  }
+
+  .eca-header .md-search__input {
+    height: 100%;
+  }
+
+  .eca-header .md-search__output {
+    top: 28px;
+  }
+
+  .eca-header .md-search__icon[for=__search],
+  .eca-header .md-search__icon[for=__search] svg {
+    height: 17px;
+    width: 17px;
+  }
+
+  .eca-header .md-search__icon[for=__search] {
+    top: 5.5px;
+  }
+
+  .md-search__form .eca-search__label {
+    align-items: center;
+    border-left: 1px solid currentcolor;
+    bottom: 0;
+    display: flex;
+    left: 27px;
+    padding: 0 8px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  [data-md-toggle=search]:checked ~ .md-header .md-search__form .eca-search__label {
+    display: none;
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .md-search__inner {
+    width: 5.2rem;
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .md-search__form,
+  [data-md-toggle=search]:not(:checked) ~ .md-header .md-search__form:hover {
+    background-color: transparent;
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .md-search__input {
+    caret-color: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .md-search__icon[for=__search] {
+    left: 5px;
+    top: 4.5px;
+  }
+}
+
+@media screen and (min-width: 76.25em) {
+  /* Equal outer columns keep the links centered */
+  .eca-header__left,
+  .eca-header__right {
+    flex: 1 1 0;
+  }
+
+  .eca-header__right {
+    justify-content: flex-end;
+  }
+
+  .eca-header__links {
+    align-items: center;
+    display: flex;
+  }
+
+  /* The name stays "ECA". Material swaps it for the page title on scroll */
+  .eca-header .md-header__title--active .md-header__topic:first-child {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    z-index: auto;
+  }
+
+  .eca-header .md-header__topic + .md-header__topic {
+    display: none;
+  }
 }
 
 /* Lucide icons (docs/overrides/.icons/lucide) scale with the font size
@@ -366,4 +670,143 @@
 
 .eca-footer-credit {
   white-space: nowrap;
+}
+
+/* ── Header right, bare icons (version B in partials/header.html) ──
+   Search and Slack are plain icons, GitHub is an icon followed by a
+   star-count tag whose left edge points at the logo. Everything is 70%
+   opacity and 100% on hover. The boxed version A rules above are left in
+   place. The ones that would still reach the search box are reset here by
+   scoping to .eca-header__right--bare. */
+.eca-header {
+  --eca-bare-box: 32px;
+  --eca-bare-icon: 1.1rem;
+}
+
+.eca-header__icon,
+.eca-gh {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  height: var(--eca-bare-box);
+  opacity: 0.8;
+  transition: opacity 0.25s;
+}
+
+.eca-header__icon {
+  justify-content: center;
+  width: var(--eca-bare-box);
+}
+
+.eca-header__icon:hover,
+.eca-gh:hover {
+  opacity: 1;
+}
+
+.eca-header__icon svg,
+.eca-gh svg {
+  display: block;
+  fill: currentcolor;
+  flex-shrink: 0;
+}
+
+/* Slack's glyph fills more of its box than the GitHub mark does */
+.eca-header__icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.eca-gh svg {
+  scale: 0.9;
+  height: var(--eca-bare-icon);
+  width: var(--eca-bare-icon);
+}
+
+/* Tag: outlined box, with the pointer drawn by a rotated square that has
+   only its left and bottom borders. Its fill is the header color so it
+   hides the tag's own left border behind the point. */
+.eca-gh__tag {
+  --tag-border-color: color-mix(in srgb, currentcolor, transparent 50%); 
+  border: 1px solid var(--tag-border-color);
+  border-radius: 3px;
+  box-sizing: border-box;
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--eca-header-font-size);
+  font-weight: var(--eca-header-font-weight);
+  height: 22px;
+  line-height: 1;
+  margin-left: 10px;
+  padding: 0 8px 0 12px;
+  position: relative;
+}
+
+.eca-gh__tag[hidden] {
+  display: none;
+}
+
+.eca-gh__tag::before {
+  background: var(--md-primary-fg-color);
+  border-bottom: 1px solid var(--tag-border-color);
+  border-left: 1px solid var(--tag-border-color);
+  box-sizing: border-box;
+  content: "";
+  height: 6px;
+  left: -3.5px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 6px;
+}
+
+/* Search: no border, no words, icon only */
+.eca-header__right--bare .md-header__button[for=__search] {
+  border: 0;
+  height: var(--eca-bare-box);
+  width: var(--eca-bare-box);
+}
+
+.eca-header__right--bare .eca-search__label {
+  display: none;
+}
+
+@media screen and (max-width: 59.984375em) {
+  .eca-header__right--bare .md-header__button[for=__search] {
+    justify-content: center;
+  }
+
+  .eca-header__right--bare .md-header__button[for=__search] svg {
+    height: var(--eca-bare-icon);
+    margin: 0;
+    width: var(--eca-bare-icon);
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .eca-header__right--bare .md-search {
+    width: var(--eca-bare-box);
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .eca-header__right--bare .md-search__inner {
+    width: var(--eca-bare-box);
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .eca-header__right--bare .md-search__form {
+    border: 0;
+  }
+
+  .eca-header__right--bare .md-search__icon[for=__search],
+  .eca-header__right--bare .md-search__icon[for=__search] svg {
+    height: var(--eca-bare-icon);
+    width: var(--eca-bare-icon);
+  }
+
+  .eca-header__right--bare .md-search__icon[for=__search],
+  [data-md-toggle=search]:not(:checked) ~ .md-header .eca-header__right--bare .md-search__icon[for=__search] {
+    top: 3px;
+  }
+
+  [data-md-toggle=search]:not(:checked) ~ .md-header .eca-header__right--bare .md-search__icon[for=__search] {
+    left: 5px;
+  }
 }

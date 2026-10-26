@@ -1,0 +1,137 @@
+{#-
+  Single header bar: logo and name on the left, top-level links in the
+  middle, search / Slack / GitHub stars on the right. Based on Material's
+  partials/header.html. The links replace the separate tabs bar, so they
+  stay put while the page scrolls.
+-#}
+{% macro first_url(nav_item) -%}
+  {%- if nav_item.children -%}
+    {{- first_url(nav_item.children | first) -}}
+  {%- else -%}
+    {{- nav_item.url | url -}}
+  {%- endif -%}
+{%- endmacro %}
+<header class="md-header md-header--shadow eca-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
+    <div class="eca-header__left">
+      <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+        {% include "partials/logo.html" %}
+      </a>
+      <label class="md-header__button md-icon" for="__drawer">
+        {% set icon = config.theme.icon.menu or "material/menu" %}
+        {% include ".icons/" ~ icon ~ ".svg" %}
+      </label>
+      <div class="md-header__title" data-md-component="header-title">
+        <div class="md-header__ellipsis">
+          <div class="md-header__topic">
+            <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" class="md-ellipsis eca-header__name">
+              {{ config.site_name }}
+            </a>
+          </div>
+          <div class="md-header__topic" data-md-component="header-topic">
+            <span class="md-ellipsis">
+              {% if page.meta and page.meta.title %}
+                {{ page.meta.title }}
+              {% else %}
+                {{ page.title }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="eca-header__links" role="navigation" aria-label="{{ lang.t('tabs') }}">
+      {% for nav_item in nav.items %}
+        {% set href = first_url(nav_item) %}
+        {% if href != nav.homepage.url | url %}
+          {% set external = href.startswith("http") %}
+          <a href="{{ href }}" class="eca-header__link{{ ' eca-header__link--active' if nav_item.active }}"{% if external %} target="_blank" rel="noopener"{% endif %}>{{ nav_item.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {#- Right group, version B (active): bare search and Slack icons, and the GitHub
+        icon with a star-count tag. Styles: "Header right, bare icons" in layout.css. -#}
+    <div class="eca-header__right eca-header__right--bare">
+      {% if config.theme.palette %}
+        {% if not config.theme.palette is mapping %}
+          {% include "partials/palette.html" %}
+        {% endif %}
+      {% endif %}
+      {% if not config.theme.palette is mapping %}
+        {% include "partials/javascripts/palette.html" %}
+      {% endif %}
+      {% if config.extra.alternate %}
+        {% include "partials/alternate.html" %}
+      {% endif %}
+      {% if "material/search" in config.plugins %}
+        {% set search = config.plugins["material/search"] | attr("config") %}
+        {% if search.enabled %}
+          <label class="md-header__button md-icon" for="__search" title="Search" aria-label="Search">
+            {% set icon = config.theme.icon.search or "material/magnify" %}
+            {% include ".icons/" ~ icon ~ ".svg" %}
+          </label>
+          {% include "partials/search.html" %}
+        {% endif %}
+      {% endif %}
+      {% for social in config.extra.social %}
+        {% if "slack" in social.icon %}
+          <a href="{{ social.link }}" target="_blank" rel="noopener" title="Slack" aria-label="Slack" class="eca-header__icon">
+            {% include ".icons/" ~ social.icon ~ ".svg" %}
+          </a>
+        {% endif %}
+      {% endfor %}
+      {% if config.repo_url %}
+        <a href="{{ config.repo_url }}" target="_blank" rel="noopener" title="Star {{ config.repo_name }} on GitHub" aria-label="Star {{ config.repo_name }} on GitHub" class="eca-gh" data-eca-stars="{{ config.repo_url | replace('https://github.com/', '') }}">
+          {% include ".icons/fontawesome/brands/github.svg" %}
+          <span class="eca-gh__tag" data-eca-stars-count hidden></span>
+        </a>
+      {% endif %}
+    </div>
+
+    {#- Right group, version A (boxed buttons with "Search", "Discuss" and "Star"):
+        to switch back, delete version B above and uncomment this block. Version A
+        styles stay in layout.css and are untouched by version B.
+    <div class="eca-header__right">
+      {% if config.theme.palette %}
+        {% if not config.theme.palette is mapping %}
+          {% include "partials/palette.html" %}
+        {% endif %}
+      {% endif %}
+      {% if not config.theme.palette is mapping %}
+        {% include "partials/javascripts/palette.html" %}
+      {% endif %}
+      {% if config.extra.alternate %}
+        {% include "partials/alternate.html" %}
+      {% endif %}
+      {% if "material/search" in config.plugins %}
+        {% set search = config.plugins["material/search"] | attr("config") %}
+        {% if search.enabled %}
+          <label class="md-header__button md-icon" for="__search">
+            {% set icon = config.theme.icon.search or "material/magnify" %}
+            {% include ".icons/" ~ icon ~ ".svg" %}
+            <span class="eca-search__label">Search</span>
+          </label>
+          {% include "partials/search.html" %}
+        {% endif %}
+      {% endif %}
+      {% for social in config.extra.social %}
+        {% if "slack" in social.icon %}
+          <a href="{{ social.link }}" target="_blank" rel="noopener" title="Slack" aria-label="Slack" class="eca-header__slack">
+            {% include ".icons/" ~ social.icon ~ ".svg" %}
+            <span>Discuss</span>
+          </a>
+        {% endif %}
+      {% endfor %}
+      {% if config.repo_url %}
+        <a href="{{ config.repo_url }}" target="_blank" rel="noopener" title="Star {{ config.repo_name }} on GitHub" class="eca-stars" data-eca-stars="{{ config.repo_url | replace('https://github.com/', '') }}">
+          <span class="eca-stars__identity">
+            {% include ".icons/fontawesome/brands/github.svg" %}
+            <span>Star</span>
+          </span>
+          <span class="eca-stars__count" data-eca-stars-count hidden></span>
+        </a>
+      {% endif %}
+    </div>
+    -#}
+  </nav>
+</header>

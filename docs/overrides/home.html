@@ -1151,7 +1151,7 @@
     color: var(--eca-text-secondary);
     line-height: 1.6;
     margin: 0 0 2rem;
-    max-width: 32rem;
+    max-width: 36rem;
     margin-left: auto;
     margin-right: auto;
   }
@@ -1231,7 +1231,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--eca-text-muted);
+    color: var(--eca-text-secondary);
     margin: 0 0 1rem;
   }
 
@@ -1305,7 +1305,7 @@
 
   .eca-community__clojure {
     font-size: 0.78rem;
-    color: var(--eca-text-muted);
+    color: var(--eca-text-secondary);
     margin: 0;
   }
 
@@ -1469,30 +1469,39 @@
     background: #d8d8d8;
   }
 
-  /* Community buttons share the editor button look: light gray pill,
-     slightly darker on hover */
-  body:not([data-md-color-scheme="slate"]) .eca-community__links {
-    gap: 0.9rem;
-  }
-
+  /* Community buttons: --eca-bg-secondary with the original geometry,
+     slightly darker on hover. Only the heart and Slack icons keep color. */
   body:not([data-md-color-scheme="slate"]) .eca-community__links .eca-btn {
-    gap: 0.45rem;
-    padding: var(--button-padding-default);
-    border-radius: 999px;
-    font-size: 16px;
+    padding: 0.65rem 1.4rem;
+    padding-inline-start: 1.15rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
     font-weight: 500;
-    letter-spacing: normal;
+    letter-spacing: 0.01em;
     color: #22221f;
-    background: #e8e7e2;
-    border: 1px solid #dddbd4;
+    background: var(--eca-bg-secondary);
+    border: 1.5px solid #dddbd4;
     box-shadow: none;
     transform: none;
   }
 
+  body:not([data-md-color-scheme="slate"]) .eca-btn--github svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-btn--sponsor svg {
+    color: #bf3070;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-btn--slack svg {
+    color: #4a154b;
+  }
+
   body:not([data-md-color-scheme="slate"]) .eca-community__links .eca-btn:hover {
     color: #22221f;
-    background: #dfded7;
-    border-color: #dddbd4;
+    background: var(--eca-bg-secondary);
+    border-color: #b5b3aa;
     box-shadow: none;
     transform: none;
   }
@@ -1613,17 +1622,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ── Trusted by ── -->
-  <section class="eca-trusted" aria-label="Trusted by">
-    <h2 class="eca-trusted__title">Trusted by the best</h2>
-    <ul class="eca-trusted__logos">
-      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
-      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
-      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
-      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
-    </ul>
   </section>
 
   <!-- ── Why ECA ── -->
@@ -2113,6 +2111,17 @@ git changes.</pre></div>
     </div>
   </section>
 
+  <!-- ── Trusted by ── -->
+  <section class="eca-trusted" aria-label="Trusted by">
+    <h2 class="eca-trusted__title">Trusted by the best</h2>
+    <ul class="eca-trusted__logos">
+      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
+      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
+      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
+      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
+    </ul>
+  </section>
+
   <!-- ── Community ── -->
   <section class="eca-community">
     <div class="eca-community__inner">
@@ -2123,7 +2132,7 @@ git changes.</pre></div>
       <h2 class="eca-community__title">Join the Community</h2>
       <p class="eca-community__desc">
         ECA is built in the open. Star the repo to show your support,
-        sponsor the project to keep it going, or jump in and share your thoughts.
+        sponsor the project to keep it going, or jump in to our Slack channel and share your thoughts.
       </p>
       <div class="eca-community__links">
         <a href="https://github.com/editor-code-assistant/eca" class="eca-btn eca-btn--github" target="_blank">

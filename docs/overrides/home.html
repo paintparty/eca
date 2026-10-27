@@ -537,6 +537,14 @@
     margin: 0 0 0.5rem;
   }
 
+  .eca-section-title {
+      text-align: left;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #000000;
+      margin: 0 0 0.2rem;
+  }
+
   .eca-section-desc {
     text-align: center;
     font-size: 0.95rem;
@@ -544,6 +552,17 @@
     max-width: 34rem;
     margin: 0 auto 2.25rem;
     line-height: 1.6;
+  }
+
+  .eca-section-desc {
+    color: #6b7b8c;
+    letter-spacing: -0.015em;
+    text-align: left;
+    font-size: 1.1rem;
+    color: var(--eca-text-secondary);
+    max-width: 26rem;
+    margin: 0 0 2.25rem;
+    line-height: 1.4;
   }
 
   /* ── 6b. Trusted By (logo strip) ── */
@@ -630,8 +649,8 @@
   .eca-why__image-frame {
     border-radius: 14px;
     overflow: hidden;
-    border: 2px solid var(--eca-border);
-    box-shadow: 0 8px 24px var(--eca-shadow-sm);
+    /* border: 2px solid var(--eca-border); */
+    /* box-shadow: 0 8px 24px var(--eca-shadow-sm); */
   }
 
   .eca-why__image-frame img {
@@ -1636,15 +1655,14 @@
   <!-- ── Why ECA ── -->
   <section class="eca-why">
     <div class="eca-why__inner">
-      <h2 class="eca-section-title">Why ECA?</h2>
+      <h2 class="eca-section-title">A protocol-first approach</h2>
       <p class="eca-section-desc">
-        A protocol-first approach to AI coding &mdash; one server connecting any editor to any LLM.
-          <br/>
-          For ones interested in being in the loop inside your editor.
+        One server connects any editor to any LLM.<br/>
+        For those who want to stay in the loop, within the comfort of your existing editor.
       </p>
       <div class="eca-why__split">
         <div class="eca-why__image-frame">
-          <img src="images/rationale.jpg" alt="ECA rationale — LLMs connected to editors via protocol" loading="lazy">
+          <img src="images/eca-hub-diagram-v2.webp" alt="ECA rationale — LLMs connected to editors via protocol" loading="lazy">
         </div>
         <div class="eca-why__advantages">
           <div class="eca-why__item">

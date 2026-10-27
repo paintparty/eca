@@ -40,3 +40,4 @@ CHANGELOG.html
 
 /integration-test/out/
 reachability-metadata.json
+docs/.DS_Store

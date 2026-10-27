@@ -410,7 +410,7 @@
    box with a 1px white outline and 3px corners, 70% opacity and 100% on
    hover. Sizes follow the counter badges on paintparty.github.io/bling. */
 .eca-header__right {
-  gap: 0.4rem;
+  gap: 0.7rem;
   padding-right: 0.4rem;
 }
 
@@ -456,7 +456,7 @@
 }
 
 .eca-header__slack {
-  padding: 0 8px;
+  padding: 0 0 0 8px;
 }
 
 .eca-header__slack svg,
@@ -469,6 +469,7 @@
 .eca-header__slack svg {
   height: 16px;
   width: 16px;
+  scale: 0.9;
 }
 
 /* Star counter: GitHub icon and "Star" on the left, a vertical divider,
@@ -679,8 +680,14 @@
    place. The ones that would still reach the search box are reset here by
    scoping to .eca-header__right--bare. */
 .eca-header {
-  --eca-bare-box: 32px;
+  --eca-bare-box: 28px;
   --eca-bare-icon: 1.1rem;
+  /* GitHub and Slack glyphs share one size. The label and the count tag
+     share one height, border color and corner radius. */
+  --eca-gh-icon: 0.85rem;
+  --eca-gh-height: 22px;
+  --eca-gh-radius: 3px;
+  --eca-gh-border-color: color-mix(in srgb, currentcolor, transparent 50%);
 }
 
 .eca-header__icon,
@@ -689,8 +696,13 @@
   color: inherit;
   display: inline-flex;
   height: var(--eca-bare-box);
-  opacity: 0.8;
+  opacity: 1;
   transition: opacity 0.25s;
+  font-size: 0.6rem;
+  font-weight: 600;
+  &[title="Slack"]{
+    padding-right: 5px;
+  }
 }
 
 .eca-header__icon {
@@ -710,34 +722,42 @@
   flex-shrink: 0;
 }
 
-/* Slack's glyph fills more of its box than the GitHub mark does */
-.eca-header__icon svg {
-  height: 1rem;
-  width: 1rem;
+.eca-header__icon svg,
+.eca-gh svg {
+  height: var(--eca-gh-icon);
+  width: var(--eca-gh-icon);
 }
 
 .eca-gh svg {
-  scale: 0.9;
-  height: var(--eca-bare-icon);
-  width: var(--eca-bare-icon);
+  scale: 0.85;
+}
+
+/* Label: GitHub icon and "Star" in a box matching the count tag */
+.eca-gh__label {
+  align-items: center;
+  border: 1px solid var(--eca-gh-border-color);
+  border-radius: var(--eca-gh-radius);
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 2.5px;
+  height: var(--eca-gh-height);
+  line-height: 1;
+  padding: 0 6px 0 4px;
 }
 
 /* Tag: outlined box, with the pointer drawn by a rotated square that has
    only its left and bottom borders. Its fill is the header color so it
    hides the tag's own left border behind the point. */
 .eca-gh__tag {
-  --tag-border-color: color-mix(in srgb, currentcolor, transparent 50%); 
-  border: 1px solid var(--tag-border-color);
-  border-radius: 3px;
+  border: 1px solid var(--eca-gh-border-color);
+  border-radius: var(--eca-gh-radius);
   box-sizing: border-box;
   align-items: center;
   display: inline-flex;
-  font-size: var(--eca-header-font-size);
-  font-weight: var(--eca-header-font-weight);
-  height: 22px;
+  height: var(--eca-gh-height);
   line-height: 1;
-  margin-left: 10px;
-  padding: 0 8px 0 12px;
+  margin-left: 6.5px;
+  padding: 0 6px 0 6px;
   position: relative;
 }
 
@@ -747,8 +767,8 @@
 
 .eca-gh__tag::before {
   background: var(--md-primary-fg-color);
-  border-bottom: 1px solid var(--tag-border-color);
-  border-left: 1px solid var(--tag-border-color);
+  border-bottom: 1px solid var(--eca-gh-border-color);
+  border-left: 1px solid var(--eca-gh-border-color);
   box-sizing: border-box;
   content: "";
   height: 6px;

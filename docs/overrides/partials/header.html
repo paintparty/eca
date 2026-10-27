@@ -82,7 +82,10 @@
       {% endfor %}
       {% if config.repo_url %}
         <a href="{{ config.repo_url }}" target="_blank" rel="noopener" title="Star {{ config.repo_name }} on GitHub" aria-label="Star {{ config.repo_name }} on GitHub" class="eca-gh" data-eca-stars="{{ config.repo_url | replace('https://github.com/', '') }}">
-          {% include ".icons/fontawesome/brands/github.svg" %}
+          <span class="eca-gh__label">
+            {% include ".icons/fontawesome/brands/github.svg" %}
+            <span>Star</span>
+          </span>
           <span class="eca-gh__tag" data-eca-stars-count hidden></span>
         </a>
       {% endif %}

@@ -5,6 +5,29 @@
   --md-accent-fg-color: #000000;
   --md-accent-fg-color--transparent: rgba(0, 0, 0, 0.07);
   --eca-teal: #026378;
+  /* Max content width. The header bar and the homepage sections use it so
+     their left edges line up */
+  --eca-container: 1300px;
+}
+
+/* Light header (any scheme but slate, which keeps the teal bar). The bar's
+   text and icons use currentcolor, so setting color is enough. The logo
+   is a light-gray SVG, so brightness(0) turns it black. */
+body:not([data-md-color-scheme="slate"]) .eca-header {
+  --eca-header-bg: #fff;
+  background-color: var(--eca-header-bg);
+  color: #22221f;
+  --md-primary-bg-color: #22221f;
+  --md-primary-bg-color--light: rgba(34, 34, 31, 0.7);
+}
+
+body:not([data-md-color-scheme="slate"]) .eca-header .md-logo img,
+body:not([data-md-color-scheme="slate"]) .eca-header .md-logo svg {
+  filter: brightness(0);
+}
+
+.eca-header .md-header__inner {
+  max-width: var(--eca-container);
 }
 
 .md-footer {
@@ -326,7 +349,8 @@
 /* Less vertical padding keeps the header at Material's 2.4rem height:
    1.5rem logo + 2 x 0.25rem padding + 2 x 0.2rem margin */
 .md-header__button.md-logo {
-  padding-block: 0.25rem;
+  margin: 0;
+  padding: 0;
 }
 
 .md-header__button.md-logo img,
@@ -379,6 +403,8 @@
 
 .eca-header__name {
   color: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .eca-header__links {
@@ -391,13 +417,16 @@
   font-size: var(--eca-header-font-size);
   font-weight: var(--eca-header-font-weight);
   line-height: 2.6rem;
-  opacity: 0.9;
+  opacity: 1;
   padding: 0 0.7rem;
   transition: opacity 0.25s;
   white-space: nowrap;
 }
 
-.eca-header__link:hover,
+.eca-header__link:hover {
+  opacity: 0.6;
+}
+
 .eca-header__link--active {
   opacity: 1;
 }
@@ -421,7 +450,7 @@
   border: 1px solid currentcolor;
   border-radius: 3px;
   box-sizing: border-box;
-  opacity: 0.7;
+  opacity: 1;
   transition: opacity 0.25s;
 }
 
@@ -429,7 +458,7 @@
 .eca-stars:hover,
 .md-header__button[for=__search]:hover,
 [data-md-toggle=search]:not(:checked) ~ .md-header .md-search__form:hover {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .eca-header__slack,
@@ -688,6 +717,7 @@
   --eca-gh-height: 22px;
   --eca-gh-radius: 3px;
   --eca-gh-border-color: color-mix(in srgb, currentcolor, transparent 50%);
+  --eca-header-bg: var(--md-primary-fg-color);
 }
 
 .eca-header__icon,
@@ -712,7 +742,7 @@
 
 .eca-header__icon:hover,
 .eca-gh:hover {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .eca-header__icon svg,
@@ -766,7 +796,7 @@
 }
 
 .eca-gh__tag::before {
-  background: var(--md-primary-fg-color);
+  background: var(--eca-header-bg);
   border-bottom: 1px solid var(--eca-gh-border-color);
   border-left: 1px solid var(--eca-gh-border-color);
   box-sizing: border-box;

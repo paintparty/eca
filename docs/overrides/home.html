@@ -248,82 +248,46 @@
     }
   }
 
-  /* ── 3. Hero Section ── */
-  .eca-hero {
-    position: relative;
-    padding: 4rem 2rem;
-    overflow: hidden;
-    background: linear-gradient(180deg, #007a94 0%, #006a82 40%, #005268 100%);
-    color: #fff;
+  :root {
+    --button-padding-default: .78em 1.35em .8em;
+    --button-padding-md-sm: .6em 1.25em .62em;
+    --button-padding-sm: .4em .75em .42em;
+    --button-padding-xs: .15em .5em;
   }
 
-  .eca-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 0% 100%, rgba(0,165,184,0.15) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(0,165,184,0.1) 0%, transparent 70%);
-    pointer-events: none;
+  /* ── 3. Hero Section ── */
+  .eca-hero {
+    padding: 4rem 2rem 3.5rem;
+    background: #fff;
+    color: #22221f;
   }
 
   .eca-hero__inner {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 3rem;
-    align-items: center;
-    max-width: 72rem;
+    max-width: var(--eca-container);
     margin: 0 auto;
-    z-index: 1;
   }
 
-  .eca-hero__text {
-    display: flex;
-    flex-direction: column;
+  .eca-hero__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 0.8em;
+    color: #9c9c96;
   }
 
-  .eca-hero__logo {
-    width: 72px;
-    height: 72px;
-    margin-bottom: 1.25rem;
-    filter: brightness(0) invert(1);
-    opacity: 0.75;
-    animation: eca-float 6s ease-in-out infinite;
+  /* Hook for styling the E, C and A of the acronym on their own */
+  .eca-hero__initial {
+    color: inherit;
   }
 
   .eca-hero__title {
-    font-size: 2.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin: 0 0 0.75rem;
-    color: #fff;
-  }
-
-  .eca-hero__title span {
-    display: block;
-    font-size: 0.85rem;
+    font-size: 40px;
     font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #a6f0f7;
-    margin-bottom: 0.5rem;
-  }
-
-  .eca-hero__subtitle {
-    font-size: 1.15rem;
-    font-weight: 300;
-    opacity: 0.9;
-    max-width: 30rem;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
     margin: 0 0 2rem;
-    line-height: 1.55;
-  }
-
-  .eca-hero__actions {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    color: #22221f;
   }
 
   /* ── 4. Buttons ── */
@@ -372,113 +336,139 @@
     fill: currentColor;
   }
 
-  /* ── 5. Editor Showcase (CSS-only tabs) ── */
+  /* ── 5. Editor Showcase (auto-rotating) ── */
   .eca-hero__showcase {
+    --eca-cycle: 20s;
+    --eca-step: 4s;
+  }
+
+  .eca-editors__pills {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-bottom: 2.5rem;
   }
 
-  .eca-hero__showcase input[type="radio"] {
-    display: none;
-  }
-
-  .eca-editors__tabs {
-    display: flex;
-    gap: 0.35rem;
-    margin-bottom: 0;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .eca-editors__tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .eca-editors__tab {
+  .eca-editors__pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.55rem 1.1rem;
-    border-radius: 8px 8px 0 0;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--eca-tab-color);
-    background: var(--eca-tab-bg);
-    border: 1.5px solid var(--eca-tab-border);
-    border-bottom: 1.5px solid var(--eca-tab-border-bottom);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-    white-space: nowrap;
-    flex-shrink: 0;
+    gap: 0.45rem;
+    padding: var(--button-padding-default);
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #22221f;
+    background: #e8e7e2;
+    border: 1px solid #dddbd4;
+    text-decoration: none;
     position: relative;
-    bottom: -2px;
-    margin-bottom: 0;
   }
 
-  .eca-editors__tab:hover {
-    color: var(--eca-tab-hover-color);
-    background: var(--eca-tab-hover-bg);
+  .eca-editors__pill:hover {
+    color: #22221f;
+    background: #dfded7;
   }
 
-  .eca-editors__tab svg {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
+  /* Active pill: a dark arc travels around the outline. The border is
+     a conic gradient whose start angle is animated, cut down to a 1px ring
+     with a mask. */
+  @property --eca-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
   }
 
-  #eca-tab-emacs:checked ~ .eca-editors__tabs label[for="eca-tab-emacs"],
-  #eca-tab-vscode:checked ~ .eca-editors__tabs label[for="eca-tab-vscode"],
-  #eca-tab-neovim:checked ~ .eca-editors__tabs label[for="eca-tab-neovim"],
-  #eca-tab-intellij:checked ~ .eca-editors__tabs label[for="eca-tab-intellij"],
-  #eca-tab-desktop:checked ~ .eca-editors__tabs label[for="eca-tab-desktop"] {
-    background: var(--eca-tab-active-bg);
-    color: var(--eca-tab-active-color);
-    border-color: var(--eca-tab-active-border);
-    border-bottom-color: var(--eca-tab-active-border-bottom);
-    z-index: 1;
+  .eca-editors__pill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--eca-angle),
+      transparent 0deg, #22221f 170deg, transparent 190deg, transparent 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+    animation: eca-pill-trace var(--eca-cycle) linear infinite;
+    animation-delay: calc(var(--i) * var(--eca-step));
+  }
+
+  .eca-editors__pill svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* The arc circles at a constant speed (576deg over the 4s its pill is
+     active, one lap per 2.5s). It fades in at the start and out over the
+     last quarter, so it is gone when the next pill begins. */
+  @keyframes eca-pill-trace {
+    0%      { --eca-angle: 0deg; opacity: 0; }
+    2%      { opacity: 1; }
+    15%     { opacity: 1; }
+    20%, 100% { --eca-angle: 576deg; opacity: 0; }
+  }
+
+  @keyframes eca-panel {
+    0%, 19%  { opacity: 1; visibility: visible; }
+    20%, 100% { opacity: 0; visibility: hidden; }
+  }
+
+  .eca-hero__showcase:hover .eca-editors__pill::after,
+  .eca-hero__showcase:hover .eca-editors__panel {
+    animation-play-state: paused;
+  }
+
+  /* Pinned to Emacs for color correction: no slideshow. Remove the
+     eca-hero__showcase--pinned class in the markup to bring it back. */
+  .eca-hero__showcase--pinned .eca-editors__pill::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .eca-hero__showcase--pinned .eca-editors__panel {
+    animation: none;
+  }
+
+  .eca-hero__showcase--pinned .eca-editors__panel:nth-child(1) {
+    opacity: 1;
+    visibility: visible;
   }
 
   .eca-editors__panels {
     display: grid;
+    max-width: 45rem;
+    margin: 0 auto;
   }
 
   .eca-editors__panel {
     grid-area: 1 / 1;
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
-  }
-
-  #eca-tab-emacs:checked   ~ .eca-editors__panels .eca-editors__panel--emacs,
-  #eca-tab-vscode:checked  ~ .eca-editors__panels .eca-editors__panel--vscode,
-  #eca-tab-neovim:checked  ~ .eca-editors__panels .eca-editors__panel--neovim,
-  #eca-tab-intellij:checked ~ .eca-editors__panels .eca-editors__panel--intellij,
-  #eca-tab-desktop:checked ~ .eca-editors__panels .eca-editors__panel--desktop {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: opacity 0.25s ease, visibility 0s linear 0s;
+    animation: eca-panel var(--eca-cycle) infinite;
+    animation-delay: calc(var(--i) * var(--eca-step));
   }
 
   .eca-editors__panel-frame {
-    border-radius: 0 12px 12px 12px;
+    border-radius: 12px;
     overflow: hidden;
-    border: 2px solid var(--eca-panel-frame-border);
-    border-top: none;
-    box-shadow: var(--eca-panel-frame-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
     background: #1e1e1e;
   }
 
   .eca-editors__panel-bar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 0.85rem;
+    gap: 6px;
+    padding: calc(0.15rem + 2.5px) 0.6rem;
     background: var(--eca-terminal-bg);
   }
 
@@ -496,36 +486,24 @@
     flex: 1;
     text-align: center;
     font-size: 0.7rem;
-    color: var(--eca-terminal-text);
+    color: #e8e8e8;
     font-weight: 500;
+  }
+
+  /* Annotation above the frame, right-aligned and pulled in by the frame's
+     12px corner radius */
+  .eca-editors__panel-caption {
+    margin: 0 10px 15px 0;
+    text-align: right;
+    font-size: 0.7rem;
+    font-style: italic;
+    color: #77776f;
   }
 
   .eca-editors__panel img {
     display: block;
     width: 100%;
     height: auto;
-  }
-
-  .eca-editors__panel-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.85rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .eca-editors__panel-link:hover {
-    color: #fff;
-  }
-
-  .eca-editors__panel-link svg {
-    width: 14px;
-    height: 14px;
-    fill: currentColor;
   }
 
   /* ── 6. Shared Section Styles ── */
@@ -635,7 +613,7 @@
   }
 
   .eca-why__inner {
-    max-width: 60rem;
+    max-width: var(--eca-container);
     margin: 0 auto;
   }
 
@@ -712,7 +690,7 @@
   }
 
   .eca-features__inner {
-    max-width: 62rem;
+    max-width: var(--eca-container);
     margin: 0 auto;
   }
 
@@ -901,7 +879,7 @@
   }
 
   .eca-showcase__inner {
-    max-width: 62rem;
+    max-width: var(--eca-container);
     margin: 0 auto;
   }
 
@@ -1077,21 +1055,21 @@
   .eca-showcase__code-wrap {
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid var(--eca-border);
-    box-shadow: 0 4px 20px var(--eca-shadow-sm);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
   }
 
   .eca-showcase__code-bar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.85rem;
+    gap: 5px;
+    padding: calc(0.16rem + 2.5px) 0.6rem;
     background: var(--eca-terminal-bg);
   }
 
   .eca-showcase__code-bar-dot {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
   }
 
@@ -1262,8 +1240,10 @@
     overflow: hidden;
     max-width: 900px;
     margin: 0 auto;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    /* Room above and below so the hover scale is not clipped */
+    padding: 1rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 4%, rgba(0,0,0,0.3) 9%, rgba(0,0,0,0.6) 15%, rgba(0,0,0,0.85) 21%, #000 28%, #000 72%, rgba(0,0,0,0.85) 79%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0.3) 91%, rgba(0,0,0,0.1) 96%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 4%, rgba(0,0,0,0.3) 9%, rgba(0,0,0,0.6) 15%, rgba(0,0,0,0.85) 21%, #000 28%, #000 72%, rgba(0,0,0,0.85) 79%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0.3) 91%, rgba(0,0,0,0.1) 96%, transparent 100%);
   }
 
   .eca-marquee__track {
@@ -1284,7 +1264,11 @@
     height: 56px;
     border-radius: 50%;
     flex-shrink: 0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    filter: grayscale(1) brightness(1.1) contrast(1.05);
+    border: 0.5px solid rgba(128, 128, 128, 0.5);
+    opacity: 0.8;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
     box-shadow: var(--eca-avatar-shadow);
   }
 
@@ -1296,7 +1280,27 @@
 
   .eca-marquee__avatar-link:hover .eca-marquee__avatar {
     transform: scale(1.18);
+    filter: grayscale(0) brightness(1.1) contrast(1.05);
+    opacity: 1;
     box-shadow: var(--eca-avatar-hover-shadow);
+  }
+
+  /* Avatar tooltip: one shared popover, shown by the script at the end */
+  .eca-tip {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    border: 0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    background: #22221f;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translate(-50%, -100%);
   }
 
   .eca-community__clojure {
@@ -1334,34 +1338,6 @@
 
   /* ── 12. Responsive ── */
   @media (max-width: 900px) {
-    .eca-hero__inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .eca-hero__text {
-      text-align: center;
-      align-items: center;
-    }
-
-    .eca-hero__subtitle {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .eca-hero__actions {
-      justify-content: center;
-    }
-
-    .eca-hero__showcase {
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    .eca-editors__tabs {
-      justify-content: center;
-    }
-
     .eca-why__split {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -1390,60 +1366,21 @@
       padding: 2rem 1rem 2.5rem;
     }
 
-    .eca-hero__inner {
-      gap: 1.75rem;
-    }
-
-    .eca-hero__logo {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 0.75rem;
-    }
-
     .eca-hero__title {
-      font-size: 1.75rem;
+      font-size: 1.9rem;
     }
 
-    .eca-hero__title span {
-      font-size: 0.8rem;
-    }
-
-    .eca-hero__subtitle {
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .eca-hero__actions {
-      flex-direction: column;
-      align-items: center;
+    .eca-editors__pills {
       gap: 0.5rem;
-      width: 100%;
     }
 
-    .eca-hero__actions .eca-btn {
-      width: 100%;
-      max-width: 16rem;
-      justify-content: center;
-      padding: 0.7rem 1.25rem;
-      font-size: 0.9rem;
-    }
-
-    .eca-editors__tabs {
-      justify-content: flex-start;
-    }
-
-    .eca-editors__tab {
-      padding: 0.4rem 0.65rem;
-      font-size: 0.72rem;
-    }
-
-    .eca-editors__tab svg {
-      width: 14px;
-      height: 14px;
+    .eca-editors__pill {
+      padding: var(--button-padding-md-sm);
+      font-size: 0.85rem;
     }
 
     .eca-editors__panel-frame {
-      border-radius: 0 8px 8px 8px;
+      border-radius: 8px;
     }
 
     .eca-features__hero {
@@ -1496,6 +1433,80 @@
       font-size: 0.85rem;
     }
   }
+  /* ── Light mode: inverted recordings and light fake windows ── */
+  body:not([data-md-color-scheme="slate"]) .eca-editors__panel img {
+    filter: invert(1)
+            saturate(var(--rec-saturate, 0.5))
+            brightness(var(--rec-brightness, 1.09))
+            hue-rotate(var(--rec-hue, 0deg))
+            contrast(var(--rec-contrast, 1));
+  }
+
+  /* Per-recording color balance. Each class overrides only the values that
+     need it. Defaults: saturate 0.5, brightness 1.09, hue 0deg, contrast 1. */
+  .eca-editors__img--emacs    { --rec-saturate: 0.2; --rec-hue: 180deg; }
+  .eca-editors__img--vscode   { }
+  .eca-editors__img--intellij { --rec-saturate: 0.2; --rec-hue: 190deg; --rec-brightness: 1.17; --rec-contrast: 0.9; }
+  .eca-editors__img--neovim   { --rec-saturate: 0; }
+  .eca-editors__img--desktop  { }
+
+  body:not([data-md-color-scheme="slate"]) .eca-editors__panel-frame {
+    background: #fff;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-editors__panel-bar,
+  body:not([data-md-color-scheme="slate"]) .eca-showcase__code-bar {
+    background: #efefef;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-editors__panel-title,
+  body:not([data-md-color-scheme="slate"]) .eca-showcase__code-bar-title {
+    color: #5a5a5a;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-editors__panel-dot,
+  body:not([data-md-color-scheme="slate"]) .eca-showcase__code-bar-dot {
+    background: #d8d8d8;
+  }
+
+  /* Community buttons share the editor button look: light gray pill,
+     slightly darker on hover */
+  body:not([data-md-color-scheme="slate"]) .eca-community__links {
+    gap: 0.9rem;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-community__links .eca-btn {
+    gap: 0.45rem;
+    padding: var(--button-padding-default);
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: normal;
+    color: #22221f;
+    background: #e8e7e2;
+    border: 1px solid #dddbd4;
+    box-shadow: none;
+    transform: none;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-community__links .eca-btn:hover {
+    color: #22221f;
+    background: #dfded7;
+    border-color: #dddbd4;
+    box-shadow: none;
+    transform: none;
+  }
+
+  body:not([data-md-color-scheme="slate"]) .eca-community__links .eca-btn svg {
+    opacity: 1;
+  }
+
+  /* The code area keeps its dark styling and is inverted. The bar above it
+     is not, so the window dots keep their colors. */
+  body:not([data-md-color-scheme="slate"]) .eca-showcase__code {
+    filter: invert(1) saturate(0.1) brightness(1.1);
+  }
+
 </style>
 {% endblock %}
 
@@ -1512,12 +1523,11 @@
   {%- endmacro %}
 
   {# ── Terminal chrome bars ── #}
-  {% macro editor_chrome(title) -%}
+  {% macro editor_chrome() -%}
     <div class="eca-editors__panel-bar">
       <span class="eca-editors__panel-dot eca-editors__panel-dot--red"></span>
       <span class="eca-editors__panel-dot eca-editors__panel-dot--yellow"></span>
       <span class="eca-editors__panel-dot eca-editors__panel-dot--green"></span>
-      <span class="eca-editors__panel-title">{{ title }}</span>
     </div>
   {%- endmacro %}
 
@@ -1531,22 +1541,19 @@
   {%- endmacro %}
 
   {# ── Editor panel macro ── #}
-  {% macro editor_panel(id, title, img_src, img_alt, cta_text) -%}
-    <div class="eca-editors__panel eca-editors__panel--{{ id }}">
+  {% macro editor_panel(id, i, title, img_src, img_alt) -%}
+    <div class="eca-editors__panel" style="--i: {{ i }}">
+      <div class="eca-editors__panel-caption">{{ title }}</div>
       <div class="eca-editors__panel-frame">
-        {{ editor_chrome(title) }}
-        <img src="{{ img_src }}" alt="{{ img_alt }}">
+        {{ editor_chrome() }}
+        <img class="eca-editors__img eca-editors__img--{{ id }}" src="{{ img_src }}" alt="{{ img_alt }}">
       </div>
-      <a href="install/#{{ id }}" class="eca-editors__panel-link">
-        {{ cta_text }}
-        {{ icon_chevron_right() }}
-      </a>
     </div>
   {%- endmacro %}
 
   {# ── Contributor avatar macro ── #}
   {% macro contributor_avatar(username, user_id, hidden=false) -%}
-    <a class="eca-marquee__avatar-link" href="https://github.com/{{ username }}" target="_blank" title="{{ username }}"{{ ' aria-hidden="true"' if hidden }}><img class="eca-marquee__avatar" src="https://avatars.githubusercontent.com/u/{{ user_id }}?v=4&s=112" alt="{{ '' if hidden else username }}" loading="lazy"></a>
+    <a class="eca-marquee__avatar-link" href="https://github.com/{{ username }}" target="_blank" data-tip="{{ username }}"{{ ' aria-hidden="true"' if hidden else ' aria-label="' ~ username ~ '"' }}><img class="eca-marquee__avatar" src="https://avatars.githubusercontent.com/u/{{ user_id }}?v=4&s=112" alt="{{ '' if hidden else username }}" loading="lazy"></a>
   {%- endmacro %}
 
   {# ── Contributors data ── #}
@@ -1575,81 +1582,48 @@
   <!-- ── Hero ── -->
   <section class="eca-hero">
     <div class="eca-hero__inner">
+      <p class="eca-hero__eyebrow"><span class="eca-hero__initial">E</span>ditor <span class="eca-hero__initial">C</span>ode <span class="eca-hero__initial">A</span>ssistant</p>
+      <h1 class="eca-hero__title">Pair programming with AI,<br>in your existing editor.</h1>
 
-      <!-- Left: text -->
-      <div class="eca-hero__text">
-        <img src="images/logo.svg" alt="ECA" class="eca-hero__logo">
-        <h1 class="eca-hero__title">
-          <span>Editor Code Assistant</span>
-          AI Pair Programming<br>in Any Editor
-        </h1>
-        <p class="eca-hero__subtitle">
-          A free, open-source, editor-agnostic tool that connects LLMs to your editor
-          through a well-defined protocol &mdash; giving you the best AI coding experience everywhere.
-        </p>
-        <div class="eca-hero__actions">
-          <a href="install" class="eca-btn eca-btn--primary">
-            <svg viewBox="0 0 24 24"><path d="M13 5v6h1.17L12 13.17 9.83 11H11V5h2m2-2H9v6H5l7 7 7-7h-4V3zm4 15H5v2h14v-2z"/></svg>
-            Get Started
-          </a>
-          <a href="https://github.com/editor-code-assistant/eca" class="eca-btn eca-btn--secondary" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
-            GitHub
-          </a>
-        </div>
-      </div>
-
-      <!-- Right: editor showcase -->
-      <div class="eca-hero__showcase">
-        <input type="radio" name="eca-editor" id="eca-tab-emacs" checked>
-        <input type="radio" name="eca-editor" id="eca-tab-vscode">
-        <input type="radio" name="eca-editor" id="eca-tab-neovim">
-        <input type="radio" name="eca-editor" id="eca-tab-intellij">
-        <input type="radio" name="eca-editor" id="eca-tab-desktop">
-
-        <div class="eca-editors__tabs">
-          <label for="eca-tab-emacs" class="eca-editors__tab">
-            <svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 24C5.448 24 .118 18.617.118 12S5.448 0 12 0c6.552 0 11.882 5.383 11.882 12S18.552 24 12 24m0-23.339C5.813.661.779 5.748.779 12s5.034 11.339 11.221 11.339c6.187 0 11.221-5.086 11.221-11.339S18.187.661 12 .661M8.03 20.197s.978.069 2.236-.042c.51-.045 2.444-.235 3.891-.552 0 0 1.764-.377 2.707-.725.987-.364 1.524-.673 1.766-1.11-.011-.09.074-.408-.381-.599-1.164-.488-2.514-.4-5.185-.457-2.962-.102-3.948-.598-4.472-.997-.503-.405-.25-1.526 1.907-2.513 1.086-.526 5.345-1.496 5.345-1.496-1.434-.709-4.109-1.955-4.659-2.224-.482-.236-1.254-.591-1.421-1.021-.19-.413.448-.768.804-.87 1.147-.331 2.766-.536 4.24-.56.741-.012.861-.059.861-.059 1.022-.17 1.695-.869 1.414-1.976-.252-1.13-1.579-1.795-2.84-1.565-1.188.217-4.05 1.048-4.05 1.048 3.539-.031 4.131.028 4.395.398.156.218-.071.518-1.015.672-1.027.168-3.163.37-3.163.37-2.049.122-3.492.13-3.925 1.046-.282.57.303 1.1.559 1.431 1.082 1.204 2.646 1.853 3.652 2.331.379.18 1.49.52 1.49.52-3.265-.18-5.619.823-7.001 1.977-1.562 1.445-.871 3.168 2.33 4.228 1.891.626 2.828.921 5.648.667 1.661-.09 1.923-.036 1.939.1.023.192-1.845.669-2.355.816-1.298.374-4.699 1.129-4.716 1.133z"/></svg>
-            Emacs
-          </label>
-          <label for="eca-tab-vscode" class="eca-editors__tab">
-            <svg viewBox="0 0 24 24"><path d="M17.583 2.006l-4.45 4.164L7.29 1.57 2.07 4.122v15.756L7.29 22.43l5.843-4.6 4.45 4.164L21.93 19.2V4.8l-4.347-2.794zM7.29 14.768V9.232L10.824 12 7.29 14.768zm10.293 2.674L13.99 12l3.593-5.442v10.884z"/></svg>
-            VS Code
-          </label>
-          <label for="eca-tab-intellij" class="eca-editors__tab">
-            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3V3zm1.5 1.5v15h15v-15h-15zM5.25 18h7.5v1.5h-7.5V18zm0-2.25h4.5V17.25h-4.5V15.75zM5.25 6h1.5v6h-1.5V6zm3 0h3.75c1.6 0 2.62 1.12 2.62 2.62 0 1.5-1.05 2.63-2.62 2.63H9.75V12h-1.5V6zm1.5 1.35v2.55h2.1c.68 0 1.2-.47 1.2-1.27 0-.83-.52-1.28-1.2-1.28H9.75z"/></svg>
-            IntelliJ
-          </label>
-          <label for="eca-tab-neovim" class="eca-editors__tab">
-            <svg viewBox="0 0 24 24"><path d="M2.214 4.954v13.615L7.2 24V10.314L14.863 19.6h.075l4.848-5.37V2.086l-4.985 5.2V0z"/></svg>
-            Neovim
-          </label>
-          <label for="eca-tab-desktop" class="eca-editors__tab">
-            <svg viewBox="0 0 24 24"><path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H3V4h18v10z"/></svg>
-            Desktop
-          </label>
+      <div class="eca-hero__showcase eca-hero__showcase--pinned">
+        <div class="eca-editors__pills">
+        <a href="install/#emacs" class="eca-editors__pill" style="--i: 0">Emacs <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
+        <a href="install/#vscode" class="eca-editors__pill" style="--i: 1">VSCode <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
+        <a href="install/#intellij" class="eca-editors__pill" style="--i: 2">Intellij <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
+        <a href="install/#neovim" class="eca-editors__pill" style="--i: 3">Neovim <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
+        <a href="install/#desktop" class="eca-editors__pill" style="--i: 4">Desktop <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></a>
         </div>
 
         <div class="eca-editors__panels">
-          {{ editor_panel("emacs", "ECA &mdash; Emacs",
+          {{ editor_panel("emacs", 0, "Emacs with ECA",
              "https://raw.githubusercontent.com/editor-code-assistant/eca-emacs/master/demo.gif",
-             "ECA running in Emacs", "Install in Emacs") }}
-          {{ editor_panel("vscode", "ECA &mdash; VS Code",
+             "ECA running in Emacs") }}
+          {{ editor_panel("vscode", 1, "VS Code with ECA",
              "https://raw.githubusercontent.com/editor-code-assistant/eca-vscode/master/demo.gif",
-             "ECA running in VS Code", "Install in VS Code") }}
-          {{ editor_panel("intellij", "ECA &mdash; IntelliJ",
+             "ECA running in VS Code") }}
+          {{ editor_panel("intellij", 2, "IntelliJ with ECA",
              "https://raw.githubusercontent.com/editor-code-assistant/eca-intellij/master/demo.gif",
-             "ECA running in IntelliJ", "Install in IntelliJ") }}
-          {{ editor_panel("neovim", "ECA &mdash; Neovim",
+             "ECA running in IntelliJ") }}
+          {{ editor_panel("neovim", 3, "Neovim with ECA",
              "https://raw.githubusercontent.com/editor-code-assistant/eca-nvim/master/demo.png",
-             "ECA running in Neovim", "Install in Neovim") }}
-          {{ editor_panel("desktop", "ECA &mdash; Desktop",
+             "ECA running in Neovim") }}
+          {{ editor_panel("desktop", 4, "Desktop with ECA",
              "https://raw.githubusercontent.com/editor-code-assistant/eca-desktop/master/demo.gif",
-             "ECA running as a Desktop app", "Install Desktop version") }}
+             "ECA running as a Desktop app") }}
         </div>
       </div>
-
     </div>
+  </section>
+
+  <!-- ── Trusted by ── -->
+  <section class="eca-trusted" aria-label="Trusted by">
+    <h2 class="eca-trusted__title">Trusted by the best</h2>
+    <ul class="eca-trusted__logos">
+      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
+      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
+      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
+      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
+    </ul>
   </section>
 
   <!-- ── Why ECA ── -->
@@ -2139,17 +2113,6 @@ git changes.</pre></div>
     </div>
   </section>
 
-  <!-- ── Trusted by ── -->
-  <section class="eca-trusted" aria-label="Trusted by">
-    <h2 class="eca-trusted__title">Trusted by the best</h2>
-    <ul class="eca-trusted__logos">
-      <li><img src="images/org-logos/nu/02_nulogo_black.png" alt="Nubank" loading="lazy"></li>
-      <li><img src="images/org-logos/flexiana/flexiana-logo.avif" alt="Flexiana" loading="lazy"></li>
-      <li><img src="images/org-logos/biolit/Biolit_pos.png" alt="Biolit" loading="lazy"></li>
-      <li><img src="images/org-logos/team-ohana/team-ohana.svg" alt="Team Ohana" loading="lazy"></li>
-    </ul>
-  </section>
-
   <!-- ── Community ── -->
   <section class="eca-community">
     <div class="eca-community__inner">
@@ -2169,11 +2132,11 @@ git changes.</pre></div>
         </a>
         <a href="https://github.com/sponsors/ericdallo" class="eca-btn eca-btn--sponsor" target="_blank">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          Sponsor
+          Sponsor ECA
         </a>
         <a href="https://clojurians.slack.com/archives/C093426FPUG" class="eca-btn eca-btn--slack" target="_blank">
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
-          Slack
+          Discuss on Slack
         </a>
       </div>
       <!-- Contributors -->
@@ -2198,6 +2161,28 @@ git changes.</pre></div>
       </p>
     </div>
   </section>
+
+  <div id="eca-tip" class="eca-tip" popover="manual"></div>
+  <script>
+    (function () {
+      var tip = document.getElementById("eca-tip");
+      if (!tip || !tip.showPopover) return;
+      function show(e) {
+        var el = e.currentTarget, r = el.getBoundingClientRect();
+        tip.textContent = el.dataset.tip;
+        tip.style.left = r.left + r.width / 2 + "px";
+        tip.style.top = r.top - 8 + "px";
+        tip.showPopover();
+      }
+      function hide() { if (tip.matches(":popover-open")) tip.hidePopover(); }
+      document.querySelectorAll(".eca-marquee__avatar-link").forEach(function (a) {
+        a.addEventListener("mouseenter", show);
+        a.addEventListener("focus", show);
+        a.addEventListener("mouseleave", hide);
+        a.addEventListener("blur", hide);
+      });
+    })();
+  </script>
 {% endblock %}
 
 {% block content %}{% endblock %}
